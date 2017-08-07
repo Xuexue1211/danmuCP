@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   <title>弹幕</title>
+   <style type="text/css">
+   	body{margin: 0; padding: 0; width: 100%; height: 100%; font-weight: 400; color: #fff;}
+   	.box{position: relative; width: 100%; height: 707px; margin: 0 auto; background: #60C4FD;}
+   	header{width: 100%; text-align: center;}
+   	h3{padding-top: 10px; font-size: 15px;}
+   	section{width: 90%; height: 75%; margin: 0 auto; background: #FFFFFF; position: relative; overflow: hidden;}
+    .show{position: absolute;}
+    span{position: absolute; height: 20px; display: block;}
+    input{margin-left: 5%; width: 70%; height: 30px; margin-top: 10px; border: none;}
+    p{margin-left: 5%; width: 90%; text-align: center;}
+    button{width: 20%; height: 35px;}
+   </style>
+</head>
+<body>
+	<div class="box">
+		<header><h3>弹幕网</h3></header>
+		<section><div class="show"></div></section>
+    <input type="text" value="想要说点什么" class="content">
+    <p><button class="send">发送</button> <button class="clear">清屏</button></p>
+   
+	</div>
+</body>
+<!-- <script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script> -->
+<script src="https://cdn.wilddog.com/js/vendor/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+   var Top, Left;
+// 获取焦点时
+   $(".content").focus(function(){
+     // txt:全局变量
+     txt = $(this).val();
+    if (txt !== "") {
+      $(this).val("");
+    }
+   });
+
+
+// 失去焦点时
+   $(".content").blur(function(){
+     // txt = $(this).val();
+    if (txt == '') {
+      $(this).val("想要说点什么");
+    }
+   });
+
+    
+  // 点击发送弹幕
+    $(".send").click(function(){
+      // 获取文本框的输入内容
+      var txt = $(".content").val();
+      // 点击添加<span>节点以及里面的内容
+      var addWord = $("<span></span>").text(txt);
+      $(".show").append(addWord);
+      var showH = $("section").height();
+      var showW = $("section").width() - txt.length;
+      Top = parseInt(showH*(Math.random()));
+      if (Top > showH - 20) {
+        Top = showH - 20;
+      };
+      // alert(txt.length);
+      // 设置span的样式
+      // $("span").css("position" ,"absolute");
+      $(addWord).css({
+        'top' : Top,
+        'left' : showW,
+        'color':getRandomColor(),
+         'width': (txt.length * 20) + 'px'
+      });
+      // 弹幕移动
+      var spanMove=$(".show>span:last-child");
+            spanMove.animate({"left":showW-700},10000,"linear" ,function(){
+                        $(this).remove();
+                    });
+             
+   });
+
+    function getRandomColor(){
+            return '#' + (function(h){
+                return new Array(7 - h.length).join("0") + h
+            })((Math.random() * 0x1000000 << 0).toString(16));
+        };
+
+ $(".content").keypress(function(event) {
+    //回车键的ACSII码是13
+        if(event.keyCode == "13") {
+      //触发.s_sub事件的click时间
+            $(".send").trigger('click');
+        }
+    });
+
+    // 点击清理弹幕
+    $(".clear").click(function(){
+      $(".show").empty();
+    })
+})
+  
+</script>
+</html>
