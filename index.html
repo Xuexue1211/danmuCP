@@ -18,18 +18,17 @@
    </style>
 </head>
 <body>
-	<div class="box">
-		<header><h3>弹幕网</h3></header>
-		<section><div class="show"></div></section>
-    <input type="text" value="想要说点什么" class="content">
-    <p><button class="send">发送</button> <button class="clear">清屏</button></p>
-   
-	</div>
+   <div class="box">
+	<header><h3>弹幕网</h3></header>
+	<section><div class="show"></div></section>
+   	<input type="text" value="想要说点什么" class="content">
+    	<p><button class="send">发送</button> <button class="clear">清屏</button></p>
+   </div>
 </body>
 <!-- <script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script> -->
 <script src="https://cdn.wilddog.com/js/vendor/jquery-1.11.2.min.js"></script>
 <script type="text/javascript">
-	$(function(){
+$(function(){
    var Top, Left;
 // 获取焦点时
    $(".content").focus(function(){
@@ -38,18 +37,14 @@
     if (txt !== "") {
       $(this).val("");
     }
-   });
-
-
+ });
 // 失去焦点时
    $(".content").blur(function(){
      // txt = $(this).val();
     if (txt == '') {
       $(this).val("想要说点什么");
     }
-   });
-
-    
+ });   
   // 点击发送弹幕
     $(".send").click(function(){
       // 获取文本框的输入内容
@@ -76,16 +71,13 @@
       var spanMove=$(".show>span:last-child");
             spanMove.animate({"left":showW-700},10000,"linear" ,function(){
                         $(this).remove();
-                    });
-             
-   });
-
+                    });    
+ });
     function getRandomColor(){
             return '#' + (function(h){
                 return new Array(7 - h.length).join("0") + h
             })((Math.random() * 0x1000000 << 0).toString(16));
         };
-
  $(".content").keypress(function(event) {
     //回车键的ACSII码是13
         if(event.keyCode == "13") {
@@ -93,12 +85,10 @@
             $(".send").trigger('click');
         }
     });
-
     // 点击清理弹幕
     $(".clear").click(function(){
       $(".show").empty();
     })
-})
-  
+})  
 </script>
 </html>
